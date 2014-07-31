@@ -4,7 +4,7 @@ input
 
 output
 ==================
-  point - contains all points, value 1 as boundary
+  point - contains only boundary point, style as 'x y' for each line
 
 shell command
 ==================
