@@ -1,0 +1,11 @@
+- content_for :javascripts do
+  :javascript
+    var LAT = #{params[:lat]},
+        LNG = #{params[:lng]},
+        POINTS = #{@points.to_json};
+
+  %script{src: "/javascripts/index.js", type: "text/javascript"}
+
+#content(role="main")
+  .container
+    #map-canvas
