@@ -1,0 +1,8 @@
+# source 'https://rubygems.org'
+source 'http://ruby.taobao.org' # chinese gem mirror
+
+gem 'sinatra'
+gem 'sinatra-contrib'
+gem 'haml'
+
+gem 'factual-api'
