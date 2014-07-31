@@ -8,4 +8,4 @@ output
 
 shell command
 ==================
-  ./run
+  ./run.sh
