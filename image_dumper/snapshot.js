@@ -1,4 +1,4 @@
-var MAP_PAGE = './tmp.html',
+var MAP_PAGE = './map.html',
     page = require( 'webpage' ).create(),
     evt;
 
