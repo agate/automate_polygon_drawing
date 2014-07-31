@@ -1,0 +1,5 @@
+# source 'https://rubygems.org'
+source 'http://ruby.taobao.org' # chinese gem mirror
+
+gem 'haml'
+gem 'json'
