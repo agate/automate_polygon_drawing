@@ -23,7 +23,8 @@ function process_image_to_polygen(img_name)
     polygen = imopen(polygen, se);
     se = strel('diamond', 5);
     polygen = imdilate(polygen, se);
-    polygen = edge(polygen, 'canny');
+    polygen = im2uint8(polygen);
+    polygen = edge(polygen, 'Canny');
     %polygen = corner(polygen);
     
     %subplot(1,3,1);imshow(img);
