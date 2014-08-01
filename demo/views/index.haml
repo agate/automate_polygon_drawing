@@ -1,31 +1,31 @@
 #content(role="main")
   .container
-
-    %form(role="form")
-      .form-group
-        .input-group
-          %input.form-control{type:"text", name:"q", value:params[:q]}
-          %span.input-group-btn
-            %button.btn.btn-default(type="submit") Search
-
+    .row
+      %form(role="form")
+        .form-group
+          .input-group
+            %input.form-control{type:"text", name:"q", value:params[:q]}
+            %span.input-group-btn
+              %button.btn.btn-default(type="submit") Search
     - if @places
-      %table.table.table-striped.table-hover.table-bordered
-        %thead
-          %tr
-            %th ID
-            %th Name
-            %th Address
-            %th Lat / Lng
-            %th Actions
-
-        %tbody
-          - @places.each do |p|
+      .row
+        %table.table.table-striped.table-hover.table-bordered
+          %thead
             %tr
-              %td= p['factual_id']
-              %td= p['name']
-              %td= p['address']
-              %td #{p['latitude']}, #{p['longitude']}
-              %td
-                %a.btn.btn-primary.btn-xs{href:"/draw?lat=#{p['latitude']}&lng=#{p['longitude']}"}
-                  .glyphicon.glyphicon-search
-                  Draw
+              %th ID
+              %th Name
+              %th Address
+              %th Lat / Lng
+              %th Actions
+
+          %tbody
+            - @places.each do |p|
+              %tr
+                %td= p['factual_id']
+                %td= p['name']
+                %td= p['address']
+                %td #{p['latitude']}, #{p['longitude']}
+                %td
+                  %a.btn.btn-primary.btn-xs{href:"/draw?lat=#{p['latitude']}&lng=#{p['longitude']}"}
+                    .glyphicon.glyphicon-search
+                    Draw
