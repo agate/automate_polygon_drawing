@@ -20,11 +20,19 @@ function process_image_to_polygen(img_name)
     polygen = imopen(polygen, se);
     polygen = imdilate(polygen, se);
     polygen = im2uint8(polygen);
-    polygen = edge(polygen, 'canny');
+    
+    [size_x,size_y] = size(img_bw);
+    filter = ones(3,3) / 9;
+    convolution = imfilter(polygen, filter, 'replicate');
+    border = zeros(size_x, size_y);
+    border(find(convolution>0 & convolution<255)) = 1;
+    imshow(border);
+    
+    %polygen = edge(polygen, 'canny');
     %polygen = corner(polygen);
     
     
-    [x,y] = find(polygen == 1);
+    [x,y] = find(border == 1);
     fid = fopen('points', 'w');
     fprintf(fid, '%d %d\n', [x,y]');
     fclose(fid);
