@@ -2,6 +2,7 @@
   :javascript
     var LAT = #{params[:lat]},
         LNG = #{params[:lng]},
+        DEFAULT_CENTER = [ 400, 400 ],
         POINTS = #{@points.to_json};
 
   %script{src: "/javascripts/index.js", type: "text/javascript"}

@@ -5,6 +5,7 @@ function Index() {
 
   this.initHTML();
   this.initMap();
+
   setTimeout(function () {
     self.drawPolygon();
   }, 500);
@@ -42,11 +43,25 @@ Index.prototype.pixelToLatlng = function (x, y) {
   return latlng;
 }
 
+Index.prototype.latlngToPixel = function (latLng) {
+  var projection = this.overlay.getProjection();
+  return projection.fromLatLngToContainerPixel(latLng);
+}
+
 Index.prototype.drawPolygon = function () {
   var self = this;
+
+  var center = this.latlngToPixel(this.map.getCenter());
   var latlngs = [];
   POINTS.forEach(function (p) {
-    latlngs.push(self.pixelToLatlng(p[0], p[1]));
+    console.log(
+      (p[0] - (DEFAULT_CENTER[0] - center.x)),
+      (p[1] - (DEFAULT_CENTER[1] - center.y))
+    );
+    latlngs.push(self.pixelToLatlng(
+      (p[0] - (DEFAULT_CENTER[0] - center.x)),
+      (p[1] - (DEFAULT_CENTER[1] - center.y))
+    ));
   });
 
   var polygon = new google.maps.Polygon({
