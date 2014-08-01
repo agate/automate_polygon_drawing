@@ -26,7 +26,7 @@ function process_image_to_polygen(img_name)
     convolution = imfilter(polygen, filter, 'replicate');
     border = zeros(size_x, size_y);
     border(find(convolution>0 & convolution<255)) = 1;
-    imshow(border);
+    %imshow(border);
     
     %polygen = edge(polygen, 'canny');
     %polygen = corner(polygen);
