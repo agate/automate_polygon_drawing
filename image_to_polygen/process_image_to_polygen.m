@@ -33,9 +33,11 @@ function process_image_to_polygen(img_name)
     
     
     [x,y] = find(border == 1);
-    fid = fopen('points', 'w');
-    fprintf(fid, '%d %d\n', [y,x]');
-    fclose(fid);
+    %fid = fopen('points', 'w');
+    %fprintf(fid, '%d %d\n', [y,x]');
+    %fclose(fid);
+
+    [y,x]
     
     %subplot(1,3,1);
     %figure(2);
