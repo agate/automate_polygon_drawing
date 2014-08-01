@@ -11,11 +11,14 @@ def get_polygon_from_file():
     filename.close()
     return polygon
 
-def draw_polygon(polygon, width, height):
+def get_start_point(polygon):
+    return sorted(polygon.keys(), key=lambda tup: tup[0])[0]
+
+def draw_polygon(points, width, height):
     data = np.zeros( (width, height, 3), dtype=np.uint8)
     for x in range(width):
         for y in range(height):
-            if (x, y) in polygon:
+            if (x, y) in points:
                 data[x, y] = [255, 0, 0]
     img = Image.fromarray(data, 'RGB')
     img.save('sample.png')
@@ -77,12 +80,15 @@ def move_to_next(direction):
 
 def traversal_image(interval):
     global direction
+    global p_x
+    global p_y
     step = 0
     points = []
     start_x = p_x
     start_y = p_y
     while True:
-        next_direction = move_to_next(direction) + 8
+        print p_x, p_y
+        direction = move_to_next(direction)
         # sample by slope
 #        if next_direction != direction:
 #            points.append((p_x, p_y))
@@ -90,17 +96,17 @@ def traversal_image(interval):
         step = step + 1
         if step % interval == 0:
             points.append((p_x, p_y))
-        direction = next_direction
         if start_x == p_x and start_y == p_y:
             break
     return points
 
-direction = 1
-interval = 1
+direction = 5
+interval = 10
+p_x = 0
+p_y = 0
 polygon = get_polygon_from_file()
-draw_polygon(polygon, 800, 800)
-(p_x, p_y) = polygon.keys()[0]
-#points = traversal_image(interval)
-#draw_polygon(points, 800, 800)
-#with open("./sample", "w") as sample:
-#    sample.write('\n'.join('%d %d' % p for p in points))
+(p_x, p_y) = get_start_point(polygon)
+points = traversal_image(interval)
+draw_polygon(points, 600, 600)
+with open("./sample", "w") as sample:
+    sample.write('\n'.join('%d %d' % p for p in points))
