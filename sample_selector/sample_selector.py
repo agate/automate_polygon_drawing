@@ -111,5 +111,4 @@ if __name__ == "__main__":
     get_polygon_from_file(input_file)
     (p_x, p_y) = get_start_point(polygon)
     points = traversal_image(interval)
-    draw_polygon(points, 600, 600)
     print '\n'.join('%d %d' % p for p in points)
