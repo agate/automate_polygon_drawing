@@ -9,4 +9,6 @@ This script is used to select ordered sample points from polygons, which could b
 
 ##How to Run
 ----------
-The inputs are 800*800 image matrix in points file. Just run "python sample_selector.py". There will be a image file called sample.png generated. The ordered points will be saved in sample file.
+Run:
+python sample_selector.py input_file interval
+input_file is the file path of output of step image_to_polygen. The program will travel over the polygon and pick a sample point every interval points.

@@ -1,10 +1,11 @@
 #!/usr/local/bin/python
 import numpy as np
+import sys
 from PIL import Image
 
-def get_polygon_from_file():
-    polygon = {}
-    filename = open('points', 'r')
+def get_polygon_from_file(input_file):
+    global polygon
+    filename = open(input_file, 'r')
     points = []
     for line in filename:
         polygon[tuple(map(int, line[:-1].split(" ")))] = True
@@ -100,13 +101,15 @@ def traversal_image(interval):
             break
     return points
 
-direction = 5
-interval = 10
+polygon = {}
 p_x = 0
 p_y = 0
-polygon = get_polygon_from_file()
-(p_x, p_y) = get_start_point(polygon)
-points = traversal_image(interval)
-draw_polygon(points, 600, 600)
-with open("./sample", "w") as sample:
-    sample.write('\n'.join('%d %d' % p for p in points))
+direction = 5
+if __name__ == "__main__":
+    input_file = sys.argv[1]
+    interval = int(sys.argv[2])
+    get_polygon_from_file(input_file)
+    (p_x, p_y) = get_start_point(polygon)
+    points = traversal_image(interval)
+    draw_polygon(points, 600, 600)
+    print '\n'.join('%d %d' % p for p in points)
