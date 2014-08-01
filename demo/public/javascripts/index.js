@@ -8,7 +8,7 @@ function Index() {
 
   setTimeout(function () {
     self.drawPolygon();
-  }, 500);
+  }, 1000);
 }
 
 Index.prototype.initHTML = function () {
@@ -54,21 +54,17 @@ Index.prototype.drawPolygon = function () {
   var center = this.latlngToPixel(this.map.getCenter());
   var latlngs = [];
   POINTS.forEach(function (p) {
-    console.log(
-      (p[0] - (DEFAULT_CENTER[0] - center.x)),
-      (p[1] - (DEFAULT_CENTER[1] - center.y))
-    );
     latlngs.push(self.pixelToLatlng(
       (p[0] - (DEFAULT_CENTER[0] - center.x)),
       (p[1] - (DEFAULT_CENTER[1] - center.y))
     ));
   });
 
-  var polygon = new google.maps.Polygon({
+  this.polygon = new google.maps.Polygon({
     paths: latlngs
   });
 
-  polygon.setMap(this.map);
+  this.polygon.setMap(this.map);
 }
 
 google.maps.event.addDomListener(window, 'load', function () {

@@ -32,10 +32,19 @@ def generate_polygon_points
   Open3.popen3("./run.octave.sh", map_png, chdir: dir) do |i,o,e,t|
     p o.read.chomp.inspect
   end
+end
 
-  File.read("#{dir}/points").lines.map do |line|
-    line.strip.split(/\s+/).map { |x| x.to_i }
+def order_polygon_points
+  dir = File.expand_path('../../sample_selector', __FILE__)
+  points_file = File.expand_path('../../image_to_polygen/points', __FILE__)
+  ordered_points = []
+  Open3.popen3('python', 'sample_selector.py', points_file, '20', chdir: dir) do |i,o,e,t|
+    ordered_points = o.readlines.map do |line|
+      line.strip.split(/\s+/).map { |x| x.to_i }
+    end
   end
+
+  ordered_points
 end
 
 get '/' do
@@ -51,7 +60,9 @@ get '/draw' do
   lng = params[:lng]
 
   generate_map_png(lat, lng)
+  generate_polygon_points
 
-  @points = generate_polygon_points
+  @points = order_polygon_points
+
   haml :draw
 end
