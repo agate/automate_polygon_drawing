@@ -1,11 +1,20 @@
-var MAP_PAGE = './map.html',
-    page = require( 'webpage' ).create(),
-    evt;
+var system = require('system'),
+    page = require('webpage').create(),
+    dir = system.args[1];
 
 page.viewportSize = { width: 800, height: 800 };
-page.open(MAP_PAGE, function (status) {
-  setTimeout(function () {
-    page.render('map.png');
-    phantom.exit();
-  }, 3000);
+
+page.open(dir + '/map.html', function (status) {
+  page.onCallback = function(data) {
+    setTimeout(function () {
+      page.render(dir + '/map.png');
+      phantom.exit();
+    }, 50);
+  }
+
+  page.evaluate(function() {
+    google.maps.event.addListenerOnce(map, 'tilesloaded', function() {
+      window.callPhantom();
+    });
+  });
 });

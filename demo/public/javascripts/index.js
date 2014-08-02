@@ -6,9 +6,9 @@ function Index() {
   this.initHTML();
   this.initMap();
 
-  setTimeout(function () {
+  google.maps.event.addListenerOnce(this.map, 'tilesloaded', function() {
     self.drawPolygon();
-  }, 1000);
+  });
 }
 
 Index.prototype.initHTML = function () {
@@ -61,7 +61,9 @@ Index.prototype.drawPolygon = function () {
   });
 
   this.polygon = new google.maps.Polygon({
-    paths: latlngs
+    paths: latlngs,
+    strokeColor: '#FF0000',
+    fillColor: '#FF0000'
   });
 
   this.polygon.setMap(this.map);

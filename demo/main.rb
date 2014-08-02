@@ -19,32 +19,38 @@ def search(q)
   API.table('places').search(q).rows
 end
 
+def get_output_dir(lat, lng)
+  File.expand_path("../../results/#{lat}+#{lng}", __FILE__)
+end
+
+# step 1
 def generate_map_png(lat, lng)
   dir = File.expand_path('../../image_dumper', __FILE__)
   Open3.popen3("./run.sh", lat, lng, chdir: dir) do |i,o,e,t|
-    p o.read.chomp.inspect
+    o.read #placeholder
   end
 end
 
-def generate_polygon_points
+# step 2
+def generate_polygon_points(output_dir)
   dir = File.expand_path('../../image_to_polygen', __FILE__)
-  map_png = File.expand_path('../../image_dumper/map.png', __FILE__)
+  map_png = "#{output_dir}/map.png"
   Open3.popen3("./run.octave.sh", map_png, chdir: dir) do |i,o,e,t|
-    p o.read.chomp.inspect
+    File.write("#{output_dir}/points", o.read.chomp)
   end
 end
 
-def order_polygon_points
+# step 3
+def order_polygon_points(output_dir)
   dir = File.expand_path('../../sample_selector', __FILE__)
-  points_file = File.expand_path('../../image_to_polygen/points', __FILE__)
-  ordered_points = []
+  points_file = "#{output_dir}/points"
+
   Open3.popen3('python', 'sample_selector.py', points_file, '20', chdir: dir) do |i,o,e,t|
     ordered_points = o.readlines.map do |line|
       line.strip.split(/\s+/).map { |x| x.to_i }
     end
+    File.write("#{output_dir}/ordered_points.json", ordered_points.to_json)
   end
-
-  ordered_points
 end
 
 get '/' do
@@ -59,10 +65,15 @@ get '/draw' do
   lat = params[:lat]
   lng = params[:lng]
 
-  generate_map_png(lat, lng)
-  generate_polygon_points
+  output_dir = get_output_dir(lat, lng)
 
-  @points = order_polygon_points
+  unless File.exists?("#{output_dir}/ordered_points.json")
+    generate_map_png(lat, lng)
+    generate_polygon_points(output_dir)
+    order_polygon_points(output_dir)
+  end
+
+  @points = JSON.parse(File.read("#{output_dir}/ordered_points.json"))
 
   haml :draw
 end
