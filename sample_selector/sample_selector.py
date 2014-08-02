@@ -59,6 +59,7 @@ def get_border(p1):
 def compute_distance(p1, p2):
     return (p1[0]-p2[0])**2 + (p1[1]-p2[1])**2
 
+#TODO : make it more efficient
 def compute_square(p0, p1, p2, d):
     d01 = math.sqrt(compute_distance(p1, p0))
     d02 = math.sqrt(compute_distance(p2, p0))
@@ -104,18 +105,16 @@ if __name__ == "__main__":
 
     input_file = sys.argv[1]
     polygon = get_polygon_from_file(input_file)
-    [p1, p2] = get_init_points(polygon)
 
     direction = 5
+    [p1, p2] = get_init_points(polygon)
     border = get_border(p1)
 
     sample = []
     start = 0
     middle = border.index(p2)
     end = len(border)-1
-    sample.append(start)
-    sample.append(middle)
-    sample.append(end)
+    sample.extend([start, middle, end])
 
     threshold = int(sys.argv[2]) ** 2
     recursive_splitting(start, middle, end)
