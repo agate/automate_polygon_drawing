@@ -1,6 +1,7 @@
 # How to use
 ## input
-  test.png
+  arg1 - test.png
+  arg2 - true for satellite map, false for not
 
 ## output
   point - contains only boundary point, style as 'x y' for each line
