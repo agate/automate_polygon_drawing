@@ -38,9 +38,9 @@ function process_image_to_polygen(img_name, is_satellite)
     %fclose(fid);
     
     %subplot(1,3,1);
-    figure(2);
-    imshow(img);
-    hold on;plot(y,x,'r.');
+    %figure(2);
+    %imshow(img);
+    %hold on;plot(y,x,'r.');
     %subplot(1,3,2);
     %imshow(polygen);
     
