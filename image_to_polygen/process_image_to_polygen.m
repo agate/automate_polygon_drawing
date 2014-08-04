@@ -1,12 +1,12 @@
-function process_image_to_polygen(img_name)
+function process_image_to_polygen(img_name, is_satellite)
     img = imread(img_name);
     img = im2double(img);
     img_bw = sum(img, 3) / 3;
 
-    polygen_r = process_single_layer(img(:,:,1));
-    polygen_g = process_single_layer(img(:,:,2));
-    polygen_b = process_single_layer(img(:,:,3));
-    polygen_bw = process_single_layer(img_bw);
+    polygen_r = process_single_layer(img(:,:,1), is_satellite);
+    polygen_g = process_single_layer(img(:,:,2), is_satellite);
+    polygen_b = process_single_layer(img(:,:,3), is_satellite);
+    polygen_bw = process_single_layer(img_bw, is_satellite);
     polygen = polygen_r & polygen_g & polygen_b & polygen_bw;
     
     %figure(1);
@@ -14,7 +14,7 @@ function process_image_to_polygen(img_name)
     %subplot(2,2,2);imshow(polygen_g);
     %subplot(2,2,3);imshow(polygen_b);
     %subplot(2,2,4);imshow(polygen_bw);
-    
+    %imshow(polygen);
     se = strel('diamond', 10);
     polygen = imclose(polygen, se);
     polygen = imopen(polygen, se);
@@ -38,9 +38,9 @@ function process_image_to_polygen(img_name)
     %fclose(fid);
     
     %subplot(1,3,1);
-    %figure(2);
-    %imshow(img);
-    %hold on;plot(y,x,'r.');
+    figure(2);
+    imshow(img);
+    hold on;plot(y,x,'r.');
     %subplot(1,3,2);
     %imshow(polygen);
     
