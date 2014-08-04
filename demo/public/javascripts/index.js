@@ -22,7 +22,7 @@ Index.prototype.initMap = function () {
     mapTypeId: google.maps.MapTypeId.SATELLITE,
     tilt: 0,
 
-    mapTypeControl: false,
+    // mapTypeControl: false,
     overviewMapControl: false,
     panControl: false,
     rotateControl: false,

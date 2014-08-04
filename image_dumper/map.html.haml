@@ -12,7 +12,7 @@
         var mapOptions = {
           center: new google.maps.LatLng(#{config['lat']}, #{config['lng']}),
           zoom: 18,
-          mapTypeId: google.maps.MapTypeId.SATELLITE,
+          mapTypeId: google.maps.MapTypeId.#{config['map_type_id']},
           tilt: 0,
 
           mapTypeControl: false,
