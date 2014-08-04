@@ -122,7 +122,7 @@ if __name__ == "__main__":
     sample = sorted(sample)
     points = get_points_from_index(sample, border)
     for point in points:
-        print point
+        print point[0], point[1]
 
     #draw_polygon(polygon, "polygon.png")
     #draw_polygon(border, "border.png")
