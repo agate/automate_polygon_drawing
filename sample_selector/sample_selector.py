@@ -13,8 +13,8 @@ def get_polygon_from_file(input_file):
     filename.close()
     return polygon
 
-def get_init_points(polygon):
-    sorted_tuples = sorted(polygon.keys(), key=lambda tup: tup[0])
+def get_line_ends(border):
+    sorted_tuples = sorted(border, key=lambda tup: tup[0])
     start = sorted_tuples[0]
     end = sorted_tuples[-1]
     return [start, end]
@@ -46,13 +46,14 @@ def move_to_next(border):
             direction = x
             return
 
-def get_border(p1):
+def get_border(polygon):
     global direction
     border = []
-    border.append(p1)
+    start = sorted(polygon.keys(), key=lambda tup: tup[0])[0]
+    border.append(start)
     while True:
         move_to_next(border)
-        if (border[-1] == p1):
+        if (border[-1] == start):
             break
     return border
 
@@ -106,11 +107,11 @@ if __name__ == "__main__":
     input_file = sys.argv[1]
     polygon = get_polygon_from_file(input_file)
 
-    direction = 5
-    [p1, p2] = get_init_points(polygon)
-    border = get_border(p1)
+    direction = 3
+    border = get_border(polygon)
 
     sample = []
+    [p1, p2] = get_line_ends(border)
     start = 0
     middle = border.index(p2)
     end = len(border)-1
